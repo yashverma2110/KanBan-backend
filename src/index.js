@@ -15,16 +15,22 @@ dotenv.config();
 // app.use((req, res, next) => {
 //   res.status(503).send("We'll be back shortly!");
 // });
-app.use(function (req, res, next) {
+var allowCrossDomain = function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
   );
-  next();
-});
+
+  // intercept OPTIONS method
+  if ("OPTIONS" == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+};
+app.use(allowCrossDomain);
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json({ limit: "10mb" }));
