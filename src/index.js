@@ -18,19 +18,15 @@ dotenv.config();
 //for heroku cors issue
 
 app.use(function (req, res, next) {
-  var allowedOrigins = [
-    "http://localhost:3000",
-    "https://drawpi.com",
-    "https://x0x0x.drawpi.com",
-    "https://doc.drawpi.com",
-    "https://d0d0d.drawpi.com",
-    "https://www.drawpi.com",
-  ];
+  var allowedOrigins = ["https://kanban-yash.herokuapp.com"];
   var origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.header("Access-Control-Allow-Origin", origin);
   } else {
-    res.header("Access-Control-Allow-Origin", "https://drawpi.com"); // Change this to https://drawpi.com
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://kanban-yash.herokuapp.com/"
+    );
   }
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
