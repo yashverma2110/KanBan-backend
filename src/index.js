@@ -15,9 +15,35 @@ dotenv.config();
 //   res.status(503).send("We'll be back shortly!");
 // });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.ORIGIN || "*");
-  next();
+//for heroku cors issue
+
+app.use(function (req, res, next) {
+  var allowedOrigins = [
+    "http://localhost:3000",
+    "https://drawpi.com",
+    "https://x0x0x.drawpi.com",
+    "https://doc.drawpi.com",
+    "https://d0d0d.drawpi.com",
+    "https://www.drawpi.com",
+  ];
+  var origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.header("Access-Control-Allow-Origin", origin);
+  } else {
+    res.header("Access-Control-Allow-Origin", "https://drawpi.com"); // Change this to https://drawpi.com
+  }
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Expose-Headers", "Content-Length");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Accept, Authorization, Content-Type, X-Requested-With, Range"
+  );
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  } else {
+    return next();
+  }
 });
 app.get("/", (req, res) => res.send("Working!!!"));
 app.use(cookieParser());
