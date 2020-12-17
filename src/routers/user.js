@@ -69,19 +69,6 @@ router.put("/user/me", auth, async (req, res) => {
   }
 });
 
-//save product
-router.post("/user/save/pet", auth, async (req, res) => {
-  try {
-    const { user } = req;
-    if (user.savedPets.includes(req.query.id))
-      user.savedPets = user.savedPets.filter((id) => id !== req.query.id);
-    else req.user.savedPets.push(req.query.id);
-    await req.user.save();
-    res.send();
-  } catch (error) {
-    res.status(500).send();
-  }
-});
 
 //delete user
 router.delete("/user/me", auth, async (req, res) => {
