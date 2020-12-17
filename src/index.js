@@ -18,7 +18,10 @@ dotenv.config();
 //for heroku cors issue
 
 app.use(function (req, res, next) {
-  var allowedOrigins = ["https://kanban-yash.herokuapp.com"];
+  var allowedOrigins = [
+    "https://kanban-yash.herokuapp.com",
+    "http://kanban-yash.herokuapp.com",
+  ];
   var origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.header("Access-Control-Allow-Origin", origin);
