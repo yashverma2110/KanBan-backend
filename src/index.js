@@ -19,6 +19,7 @@ dotenv.config();
 
 app.use(function (req, res, next) {
   var allowedOrigins = [
+    "http://localhost:3000",
     "https://kanban-yash.herokuapp.com",
     "http://kanban-yash.herokuapp.com",
   ];
